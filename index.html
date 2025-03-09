@@ -8,19 +8,20 @@
   <link rel="stylesheet" href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"> 
 </head>
 <body>
+
   <form id="loginForm">
     <div class="segment">
       <h1>Log In</h1>
     </div>
 
     <label>
-      <input type="logemail" placeholder="Email Address" required />
+      <input type="email" id="logemail" placeholder="Email Address" required />
     </label>
     <label class="password-wrapper">
       <input type="password" id="logpassword" placeholder="Password" required />
       <i class="icon ion-md-eye" id="togglePassword"></i>
     </label>
-    <button class="red" type="button"><i class="icon ion-md-lock"></i> Log in</button>
+    <button class="red" type="submit"><i class="icon ion-md-lock"></i> Log in</button>
 
     <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
   </form>
@@ -43,5 +44,7 @@
     
     
   </script>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-// ✅ Import Firebase modules (Use this if script is in an HTML file with type="module")
+// ✅ Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
@@ -19,30 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ✅ Handle Signup
-document.getElementById("signupForm")?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const email = document.getElementById("signupEmail").value;
-    const password = document.getElementById("signupPassword").value;
-    const fullName = document.getElementById("signupFullName").value;
-
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // ✅ Store user data in Firestore
-        await setDoc(doc(db, "users", user.uid), {
-            fullName: fullName,
-            email: email
-        });
-
-        alert("Signup successful! You can now log in.");
-        window.location.href = "index.html";
-    } catch (error) {
-        alert(error.message);
-    }
-});
-
+// ✅ Handle Login
 document.getElementById("loginForm")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const email = document.getElementById("logemail").value;
@@ -61,6 +38,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
             alert("No user data found!");
         }
     } catch (error) {
+        console.error("Login Error:", error);
         alert(error.message);
     }
 });
@@ -71,34 +49,8 @@ document.getElementById("logoutBtn")?.addEventListener("click", async () => {
         alert("Logged out!");
         window.location.href = "index.html";
     } catch (error) {
+        console.error("Logout Error:", error);
         alert(error.message);
     }
 });
 
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const docSnap = await getDoc(doc(db, "users", user.uid));
-        if (docSnap.exists()) {
-            document.getElementById("userEmail").textContent = `Logged in as: ${docSnap.data().fullName} (${docSnap.data().email})`;
-        }
-    } else {
-        window.location.href = "index.html"; 
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const togglePassword = document.getElementById("togglePassword");
-    const passwordField = document.getElementById("signupPassword");
-
-    if (togglePassword) {
-        togglePassword.addEventListener("click", function () {
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                togglePassword.classList.replace("ion-md-eye-off", "ion-md-eye");
-            } else {
-                passwordField.type = "password";
-                togglePassword.classList.replace("ion-md-eye", "ion-md-eye-off");
-            }
-        });
-    }
-});
