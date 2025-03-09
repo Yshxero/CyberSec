@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css">
+</head>
+<body>
+  <form id="signupForm">
+    <div class="segment">
+      <h1>Sign Up</h1>
+    </div>
+
+    <label>
+      <input type="email" id="signupEmail" placeholder="Email Address" required />
+    </label>
+    
+    <label class="password-wrapper">
+        <input type="password" id="signupPassword" placeholder="Password" required />
+        <i class="icon ion-md-eye" id="togglePassword"></i>
+    </label>
+
+    <button class="red" type="submit"><i class="icon ion-md-person-add"></i> Sign Up</button>
+
+    <p>Already have an account? <a href="index.html">Log In</a></p>
+  </form>
+
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    const passwordField = document.getElementById("signupPassword");
+    const togglePassword = document.getElementById("togglePassword");
+
+    togglePassword.addEventListener("click", function () {
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        togglePassword.classList.replace("ion-md-eye-off", "ion-md-eye"); // Show password
+      } else {
+        passwordField.type = "password";
+        togglePassword.classList.replace("ion-md-eye", "ion-md-eye-off"); // Hide password
+      }
+    });
+  </script>
+</body>
+</html>
