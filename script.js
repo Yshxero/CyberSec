@@ -1,9 +1,7 @@
-// ✅ Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-// ✅ Firebase Config
 const firebaseConfig = {
     apiKey: "AIzaSyCVYxh3Hxj5grdfG_lyY3VCYJWhBg2TD1g",
     authDomain: "cybersecurity-cd1df.firebaseapp.com",
@@ -14,12 +12,10 @@ const firebaseConfig = {
     measurementId: "G-R7DLQ3NWYC"
 };
 
-// ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ✅ Handle Login
 document.getElementById("loginForm")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const email = document.getElementById("logemail").value;
