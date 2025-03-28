@@ -16,6 +16,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+export { auth, db }; // Export auth and db for use in other files
+
+// Login
 document.getElementById("loginForm")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const email = document.getElementById("logemail").value;
@@ -26,7 +29,6 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
         const user = userCredential.user;
 
         const docSnap = await getDoc(doc(db, "users", user.uid));
-
         if (docSnap.exists()) {
             alert(`Welcome back, ${docSnap.data().fullName}!`);
             window.location.href = "dashboard.html";
@@ -42,11 +44,18 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
 document.getElementById("logoutBtn")?.addEventListener("click", async () => {
     try {
         await signOut(auth);
-        alert("Logged out!");
+        alert("You have been logged out successfully.");
         window.location.href = "index.html";
     } catch (error) {
         console.error("Logout Error:", error);
-        alert(error.message);
+        alert("Failed to log out. Please try again.");
     }
 });
 
+onAuthStateChanged(auth, (user) => {
+    if (user && window.location.pathname.includes("dashboard.html")) {
+        document.getElementById("userEmail").textContent = `Logged in as: ${user.email}`;
+    } else if (!user && !window.location.pathname.includes("index.html")) {
+        window.location.href = "index.html";
+    }
+});
